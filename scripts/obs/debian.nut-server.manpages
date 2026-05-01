@@ -42,6 +42,7 @@ debian/tmp/usr/share/man/man8/upscode2.8
 debian/tmp/usr/share/man/man8/upsd.8
 debian/tmp/usr/share/man/man8/upsdrvctl.8
 debian/tmp/usr/share/man/man8/usbhid-ups.8
+debian/tmp/usr/share/man/man8/apc_microlink.8
 debian/tmp/usr/share/man/man8/victronups.8
 debian/tmp/usr/share/man/man8/al175.8
 debian/tmp/usr/share/man/man8/apcupsd-ups.8

@@ -199,6 +199,10 @@ and a UPStation GXT2 with the Web/SNMP card for development of the liebert
 driver and expansion of the existing snmp-ups driver.
 Liebert has since been acquired by link:http://www.emerson.com[Emerson].
 
+- r0ps3c contributed the `apc_microlink` driver for APC Smart-UPS models
+that expose telemetry over the proprietary MicroLink USB HID protocol,
+developed via protocol reverse engineering from a SMC1000C unit.
+
 NOTE: If a company or individual isn't listed here, then we probably don't
 have enough information about the situation. Developers are kindly requested
 to report vendor contributions to the NUT team so this list may reflect their

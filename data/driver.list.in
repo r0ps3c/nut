@@ -106,6 +106,7 @@
 "APC"	"ups"	"3"	"Smart-UPS 1500 (SMT1500I, USB)"	"USB"	"apc_modbus"
 "APC"	"ups"	"3"	"Smart-UPS X 750 (SMX750I, USB)"	"USB"	"apc_modbus"
 "APC"	"ups"	"3"	"Smart-UPS X 1500 (SMX1500I, USB)"	"USB"	"apc_modbus"
+"APC"	"ups"	"3"	"Smart-UPS C 1000 (SMC1000C, MicroLink)"	"USB"	"apc_microlink"
 "APC"	"ups"	"3"	"CS500"	"USB"	"usbhid-ups (limited data available)"	# https://github.com/networkupstools/nut/issues/1776#issuecomment-1377784584
 "APC"	"ups"	"1"	"Back-UPS"	"940-0095A/C cables"	"genericups upstype=1"
 "APC"	"ups"	"1"	"Back-UPS"	"940-0020B/C cables"	"genericups upstype=2"

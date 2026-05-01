@@ -16,6 +16,7 @@ debian/tmp/lib/nut/rhino
 debian/tmp/lib/nut/bestups
 debian/tmp/lib/nut/bestfortress
 debian/tmp/lib/nut/usbhid-ups
+debian/tmp/lib/nut/apc_microlink
 debian/tmp/lib/nut/apcsmart
 debian/tmp/lib/nut/apcsmart-old
 debian/tmp/lib/nut/belkin

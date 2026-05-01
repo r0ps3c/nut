@@ -33,6 +33,10 @@ Changes from 2.8.5 to 2.8.6
 
 - PLANNED: Keep track of any further API clean-up?
 
+- A new experimental driver `apc_microlink` is now available for APC
+  Smart-UPS models that use the proprietary MicroLink USB HID protocol
+  (USB VID/PID 0x051D/0x0003), such as the SMC1000C.
+
 - Potentially a breaking change for C++ clients that rushed to use the new
   SSL support options in `libnutclient`: for Mozilla NSS setup, the way to
   provide an expected `CERTHOST` address was missing.  Now the API is fixed
