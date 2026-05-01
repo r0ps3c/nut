@@ -29,7 +29,7 @@ for certain packages, when a distro actually offers a choice via conditional
 
 ----
 Prefer: libusbx-devel
-Prefer: libusb-1.0-dev
+Prefer: libusb-1.0-0-dev
 Prefer: neon-devel
 ----
 

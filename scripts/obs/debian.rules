@@ -48,6 +48,14 @@ export DH_COMPAT=10
 # generation
 DEB_DH_AUTORECONF_ARGS = --as-needed
 
+NEWS:
+	echo "Please see NEWS.adoc for actual contents" > $@
+
+README:
+	echo "Please see README.adoc for actual contents" > $@
+
+debian/autoreconf.after: NEWS README
+
 DEB_HOST_ARCH_OS := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS 2>/dev/null)
 
 # echoed fallbacks are for Ubuntu primarily
@@ -87,7 +95,7 @@ DEB_CONFIGURE_MANDIR      := /usr/share/man
 DEB_CONFIGURE_EXTRA_FLAGS := --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
 			     --with-ssl --with-openssl --with-libltdl=yes \
 			     --with-cgi=auto --with-powerman=auto \
-			     --with-serial --with-usb --with-snmp --with-neon --with-ipmi \
+			     --with-serial --with-usb=libusb-1.0 --with-snmp --with-neon --with-ipmi \
 			     --with-dev --with-dev-libnutconf \
 			     --disable-static \
 			     --with-statepath=$(runbasedir)/nut \
