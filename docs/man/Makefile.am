@@ -1216,6 +1216,7 @@ endif !DOC_INSTALL_SELECTED_MANS_PROGS_BUILT
 
 # (--with-usb)
 SRC_USB_LIBUSB_PAGES = \
+	apc_microlink.txt \
 	bcmxcp_usb.txt \
 	blazer-common.txt	\
 	blazer_usb.txt	\
@@ -1228,6 +1229,7 @@ SRC_USB_LIBUSB_PAGES = \
 	usbhid-ups.txt
 
 INST_MAN_USB_LIBUSB_PAGES = \
+	apc_microlink.$(MAN_SECTION_CMD_SYS) \
 	bcmxcp_usb.$(MAN_SECTION_CMD_SYS) \
 	blazer_usb.$(MAN_SECTION_CMD_SYS) \
 	nutdrv_atcl_usb.$(MAN_SECTION_CMD_SYS) \
@@ -1251,6 +1253,7 @@ endif WITH_USB
 endif ! SOME_DRIVERS
 
 INST_HTML_USB_LIBUSB_MANS = \
+	apc_microlink.html \
 	bcmxcp_usb.html \
 	blazer_usb.html	\
 	nutdrv_atcl_usb.html \
