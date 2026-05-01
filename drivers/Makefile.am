@@ -160,7 +160,7 @@ endif HAVE_LINUX_SERIAL_H
 SNMP_DRIVERLIST = snmp-ups
 USB_LIBUSB_DRIVERLIST = usbhid-ups bcmxcp_usb tripplite_usb \
  blazer_usb richcomm_usb riello_usb powervar_cx_usb \
- nutdrv_atcl_usb
+ nutdrv_atcl_usb apc_microlink
 USB_DRIVERLIST = $(USB_LIBUSB_DRIVERLIST)
 SERIAL_USB_DRIVERLIST = \
 	nutdrv_qx
@@ -465,6 +465,10 @@ if WITH_MODBUS_USB
   apc_modbus_SOURCES += hidparser.c
   apc_modbus_LDADD += $(LDADD_DRIVERS_LIBUSB)
 endif WITH_MODBUS_USB
+
+# APC MicroLink USB HID driver
+apc_microlink_SOURCES = apc_microlink.c
+apc_microlink_LDADD = $(LDADD_DRIVERS_LIBUSB)
 
 # Huawei UPS2000 driver
 # (this is both a Modbus and a serial driver)

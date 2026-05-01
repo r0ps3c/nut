@@ -1,0 +1,100 @@
+APC_MICROLINK(8)
+================
+
+NAME
+----
+
+apc_microlink - Driver for APC MicroLink USB HID protocol
+
+SYNOPSIS
+--------
+
+*apc_microlink* -h
+
+*apc_microlink* -a 'UPS_NAME' ['OPTIONS']
+
+SUPPORTED HARDWARE
+------------------
+
+This experimental driver supports APC Smart-UPS models which expose detailed
+telemetry over a proprietary MicroLink USB HID protocol.
+
+Tested with the following hardware:
+
+ - SMC1000C (Smart-UPS C 1000, firmware UPS 18.2)
+
+Given this is an experimental driver, if your UPS supports APC Modbus
+or other more tested drivers, you should use those.
+
+EXTRA ARGUMENTS
+---------------
+
+This driver also supports the following optional settings:
+
+*port*='value'::
+Required by NUT driver configuration. Use `auto`.
+
+*bus*='num'::
+Limit matching to a USB bus number.
+
+*dev*='num'::
+Limit matching to a USB device address.
+
+*reads*='num'::
+Maximum number of HID records to read per update. The default is 80.
+
+*min_reads*='num'::
+Minimum number of HID records to read before fast polling can stop after the
+core telemetry rows are refreshed. The default is 8.
+
+*startup_reads*='num'::
+Maximum number of HID records to read while authenticating. The default is 240.
+
+*timeout_ms*='num'::
+USB interrupt transfer timeout in milliseconds. The default is 1000.
+
+*auth_delay_ms*='num'::
+Delay before sending the authentication message, in milliseconds. The default
+is 18.
+
+*full_poll*::
+Read the full configured `reads` count on every poll instead of stopping after
+core telemetry rows are refreshed.
+
+*raw_rows*::
+Publish selected raw MicroLink rows as `experimental.apc_microlink.row.*`
+variables. This is intended for debugging and protocol development.
+
+*no_reconnect*::
+Do not reopen and reauthenticate after poll failures. By default, the driver
+tries one recovery cycle before marking data stale.
+
+*reset_on_auth_fail*::
+Reset and reopen the USB device once if initial authentication fails.
+
+*reset_on_recover*::
+Reset and reopen the USB device before attempting recovery after poll failures.
+This is useful for devices which stop responding to MicroLink stream requests
+after an authenticated session has been idle.
+
+KNOWN ISSUES
+------------
+
+Shutdown commands are not implemented yet.
+
+The telemetry map is based on the MicroLink descriptor seen from the tested
+SMC1000C. Support for parsing arbitrary MicroLink descriptors is planned.
+
+AUTHOR
+------
+
+r0ps3c <rudolph+gh@faex.net>
+
+SEE ALSO
+--------
+
+*ups.conf*(5), *upsdrvctl*(8), *apc_modbus*(8), *usbhid-ups*(8)
+
+Internet resources:
+
+The NUT (Network UPS Tools) home page: https://www.networkupstools.org/
