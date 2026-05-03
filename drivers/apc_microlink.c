@@ -120,6 +120,10 @@ static int have_startup_telemetry = 0;
 static pcss_auth_state_t auth_state;
 static pcss_rows_t rows;
 
+/* Minimum seconds between USB resets; avoids hammering a slow-recovering device. */
+#define PCSS_MIN_RESET_INTERVAL_SECS 30
+static time_t last_usb_reset_time = 0;
+
 static const pcss_telemetry_map_t telemetry_map[] = {
 	{ "input.voltage",	0x5d, 0x1c, PCSS_VALUE_U16, 6,  "%.1f" },
 	{ "input.frequency",	0x5d, 0x1e, PCSS_VALUE_U16, 7,  "%.1f" },
@@ -374,6 +378,7 @@ static int pcss_read_rows(int max_reads, int do_auth)
 	int i;
 	int consecutive_timeouts = 0;
 	int rows_seen_this_call = 0;
+	int rows_after_auth_post = 0;
 	int startup_prompts = do_auth ? 1 : 0;
 	uint8_t seen_this_call[256] = {0};
 
@@ -384,7 +389,7 @@ static int pcss_read_rows(int max_reads, int do_auth)
 		if (len < 0) {
 			if (len == -2) {
 				if (++consecutive_timeouts >= 3) {
-					if ((do_auth && auth_state.authenticated) ||
+					if ((do_auth && auth_state.authenticated && rows_after_auth_post > 0) ||
 					    (!do_auth && rows_seen_this_call > 0)) {
 						return 0;
 					}
@@ -435,6 +440,8 @@ static int pcss_read_rows(int max_reads, int do_auth)
 				}
 				seen_this_call[report[1]] = 1;
 				rows_seen_this_call++;
+				if (auth_state.authenticated)
+					rows_after_auth_post++;
 			}
 
 		if (do_auth && !auth_state.authenticated && report[1] == PCSS_ROW_AUTH_TRIGGER) {
@@ -649,12 +656,20 @@ static int recover_device(void)
 	int rc;
 
 	if (opt_reset_on_recover && usb_handle) {
-		upslogx(LOG_WARNING, "resetting APC MicroLink USB device for recovery");
-		rc = usb_reset(usb_handle);
-		if (rc != LIBUSB_SUCCESS) {
-			upslogx(LOG_WARNING, "USB reset returned: %s", nut_usb_strerror(rc));
+		time_t now = time(NULL);
+		if (now - last_usb_reset_time >= PCSS_MIN_RESET_INTERVAL_SECS) {
+			upslogx(LOG_WARNING, "resetting APC MicroLink USB device for recovery");
+			rc = usb_reset(usb_handle);
+			if (rc != LIBUSB_SUCCESS) {
+				upslogx(LOG_WARNING, "USB reset returned: %s", nut_usb_strerror(rc));
+			}
+			last_usb_reset_time = time(NULL);
+			usleep(5000000);
+		} else {
+			upslogx(LOG_WARNING,
+				"skipping USB reset (last reset was %lds ago; minimum interval %ds)",
+				(long)(now - last_usb_reset_time), PCSS_MIN_RESET_INTERVAL_SECS);
 		}
-		usleep(2000000);
 	}
 
 	close_device(0);
